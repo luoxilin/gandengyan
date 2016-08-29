@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>干瞪眼</title>
+    <link rel="stylesheet" href="./style/weui.css"/>
+    <link rel="stylesheet" href="./style/index.css"/>
+</head>
+<body>
+    <div class="hd">
+        <h1 class="page_title">Person</h1>
+    </div>
+    <div class="bd spacing">
+        <div class="weui_cells_title">Person</div>
+        <div class="weui_cells weui_cells_form person_list">
+            <div class="weui_cell person">
+                <div class="weui_cell_hd"><label class="weui_label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input person_name" type="text" placeholder="请输入姓名">
+                </div>
+            </div>
+        </div>
+        <div class="weui_btn_area" style="text-align: right;">
+            <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_default add_person">增加</a>
+        </div>
+        <div class="weui_cells_tips"></div>
+        <div class="weui_btn_area btn_area_person">
+            <a class="weui_btn weui_btn_primary btn_add_person" href="javascript:;">确定</a>
+        </div>
+    </div>
+    <div id="person_hint" style="display: none;">
+        <div class="weui_mask_transparent"></div>
+        <div class="weui_toast">
+            <i class="weui_icon_toast"></i>
+            <p class="weui_toast_content">操作完成</p>
+        </div>
+    </div>
+
+    <div class="weui_dialog_confirm" id="gameOver" style="display: none;">
+        <div class="weui_mask"></div>
+        <div class="weui_dialog">
+            <div class="weui_dialog_hd"><strong class="weui_dialog_title">Game Over</strong></div>
+            <div class="weui_dialog_bd">真的不要继续瞪下去了么?</div>
+            <div class="weui_dialog_ft">
+                <a href="javascript:;" class="weui_btn_dialog default continue">继续瞪</a>
+                <a href="javascript:;" class="weui_btn_dialog primary stop">想歇歇</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/zepto.min.js"></script>
+    <script src="./js/router.min.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+</html>
