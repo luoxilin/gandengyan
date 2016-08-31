@@ -6,6 +6,92 @@
     <title>干瞪眼</title>
     <link rel="stylesheet" href="./style/weui.css"/>
     <link rel="stylesheet" href="./style/index.css"/>
+    <script src="./js/jquery-3.1.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".stop").click(function(){
+                if (localStorage.personList && localStorage.getItem('isGame') == 1) {
+                    var personList = localStorage.personList.split(",");
+                    //写入json文件
+                    var jsonObj = new Array(),
+                        endTime = getNowFormatDate();
+                    for(var i = 0; i < personList.length; i++) {
+                        if (localStorage.getItem(i)!==null) {
+                            var scoreList = localStorage.getItem(i).split(",");
+                            var total_num = 0;
+                            for(var k = 0; k < scoreList.length; k++) {
+                                total_num += (+scoreList[k]);
+                            }
+
+                        }
+                        jsonObj.push({
+                            "name" : personList[i],
+                            "total" : total_num,
+                            "detail" : localStorage.getItem(i)
+                        });
+                    }
+                    $.get("ajax.php",{
+                        action : 'save',
+                        jsonString : JSON.stringify({
+                            "time" : endTime,
+                            "result" : jsonObj
+                        })
+                    },function(d){
+                        if(d.success==1){
+                            alert(d.msg);
+                        }else {
+                            alert(d.msg);
+                        }
+                    },"json");
+
+                    //清除LocalStorage
+                    for(var j = 0; j < personList.length; j++) {
+                        localStorage.removeItem(j);
+                    }
+                    localStorage.setItem('isGame', 0);
+                    localStorage.removeItem('personList');
+                    $('.total_score_list').html('');
+                    $('#game_hint').find('.weui_toast_content').html('操作完成');
+                    $('#game_hint').show();
+                    setTimeout(function () {
+                       $('#game_hint').hide();
+                    }, 2000);
+                }
+                window.location.href = "person.html";
+            });
+        });
+
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            var strHour = date.getHours();
+            var strMin = date.getMinutes();
+            var strSec = date.getSeconds();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            if (strHour >= 0 && strHour <= 9) {
+                strHour = "0" + strHour;
+            }
+            if (strMin >= 0 && strMin <= 9) {
+                strMin = "0" + strMin;
+            }
+            if (strSec >= 0 && strSec <= 9) {
+                strSec = "0" + strSec;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + strDate
+                    + " " + strHour + seperator2 + strMin
+                    + seperator2 + strSec;
+            return currentdate;
+        }
+    </script>
 </head>
 <body>
 <div class="hd">

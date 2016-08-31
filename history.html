@@ -8,94 +8,144 @@
     <link rel="stylesheet" href="./style/index.css"/>
     <script src="./js/jquery-3.1.0.min.js"></script>
     <script src="./js/highcharts.js"></script>
+    <script src="./js/modules/drilldown.js"></script>
     <script>
-        $(function () {
-            $(document).ready(function () {
-                $('#container').highcharts({
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                    },
-                    title: {
-                        text: 'Browser market shares January, 2015 to May, 2015'
-                    },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: false
-                            },
-                            showInLegend: true
+        $(document).ready(function () {
+            $.get("ajax.php",{
+                action : 'read'
+            },function(d){
+                if(d.success==1){
+                    $('#name').html(d.userList);
+                    $('#game').html(d.gameList);
+                }else {
+                    alert(d.msg);
+                }
+            },"json");
+
+            $('.btn_search').on('click', '.btn_search_game', function () {
+                var game = $('#game').find("option:selected").val();
+                if (game == 0) {
+                    alert('请选择一场比赛');
+                }
+                else {
+                    $.get("ajax.php", {
+                        action: 'searchByGame',
+                        game: game
+                    }, function (d) {
+                        if (d.success == 1) {
+                            $('#container').highcharts({
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: game
+                                },
+                                xAxis: {
+                                    type: 'category',
+                                    showEmpty: false
+                                },
+                                yAxis: {
+                                    showEmpty: false
+                                },
+
+                                legend: {
+                                    enabled: false
+                                },
+
+                                plotOptions: {
+                                    series: {
+                                        borderWidth: 0,
+                                        dataLabels: {
+                                            enabled: true
+                                        }
+                                    }
+                                },
+
+                                series: [{
+                                    name: '总分',
+                                    colorByPoint: true,
+                                    data: d.chartData.data,
+                                    type: 'pie'
+                                }],
+                                drilldown: {
+                                    series: d.chartData.series
+                                }
+                            });
+                        } else {
+                            alert(d.msg);
                         }
-                    },
-                    series: [{
-                        name: 'Brands',
-                        colorByPoint: true,
-                        data: [{
-                            name: 'Microsoft Internet Explorer',
-                            y: 56.33
-                        }, {
-                            name: 'Chrome',
-                            y: 24.03
-                        }, {
-                            name: 'Firefox',
-                            y: 10.38
-                        }, {
-                            name: 'Safari',
-                            y: 4.77
-                        }, {
-                            name: 'Opera',
-                            y: 0.91
-                        }, {
-                            name: 'Proprietary or Undetectable',
-                            y: 0.2
-                        }]
-                    }]
-                });
+                    }, "json");
+                }
+            });
+            $('.btn_search').on('click', '.btn_search_name', function () {
+                alert('btn_search_name');
             });
         });
     </script>
 </head>
 <body>
-<div id="container" style="width:90%; height:400px; margin-left:5%; margin-top:5%;"></div>
+<div class="bd" style="height: 100%;">
+    <div class="weui_tab">
+        <div class="weui_navbar">
+            <div class="weui_navbar_item weui_bar_item_on" data-type="search_by_game">
+                根据比赛时间
+            </div>
+            <div class="weui_navbar_item" data-type="search_by_name">
+                根据选手
+            </div>
+        </div>
+        <div class="weui_tab_bd search_by_game">
+            <div class="hd">
+                <h1 class="page_title">History</h1>
+            </div>
+            <div class="bd spacing">
+                <div class="weui_cells_title">Search</div>
+                <div class="weui_cells">
+                    <div class="weui_cell weui_cell_select weui_select_after">
+                        <div class="weui_cell_hd">
+                            <label for="" class="weui_label">比赛</label>
+                        </div>
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <select class="weui_select" name="select2 game" id="game">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui_btn_area btn_search">
+                    <a class="weui_btn weui_btn_primary btn_search_game" href="javascript:;">查看</a>
+                </div>
+            </div>
+            <div id="container" style="width:90%; height:400px; margin-left:5%; margin-top:5%;"></div>
+        </div>
+        <div class="weui_tab_bd search_by_name" style="padding-top: 50px;display: none;">
+            <div class="hd">
+                <h1 class="page_title">History</h1>
+            </div>
+            <div class="bd spacing">
+                <div class="weui_cells_title">Search</div>
+                <div class="weui_cells">
+                    <div class="weui_cell weui_cell_select weui_select_after">
+                        <div class="weui_cell_hd">
+                            <label for="" class="weui_label">姓名</label>
+                        </div>
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <select class="weui_select" name="select2 name" id="name">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui_btn_area btn_search">
+                    <a class="weui_btn weui_btn_primary btn_search_name" href="javascript:;">查看</a>
+                </div>
+            </div>
+            <div id="container" style="width:90%; height:400px; margin-left:5%; margin-top:5%;"></div>
+        </div>
+    </div>
+</div>
 
-<!--<script>-->
-    <!--$(function () {-->
-        <!--$('#container').highcharts({-->
-            <!--chart: {-->
-                <!--type: 'bar'-->
-            <!--},-->
-            <!--title: {-->
-                <!--text: 'Fruit Consumption'-->
-            <!--},-->
-            <!--xAxis: {-->
-                <!--categories: ['Apples', 'Bananas', 'Oranges']-->
-            <!--},-->
-            <!--yAxis: {-->
-                <!--title: {-->
-                    <!--text: 'Fruit eaten'-->
-                <!--}-->
-            <!--},-->
-            <!--series: [{-->
-                <!--name: 'Jane',-->
-                <!--data: [1, 0, 4]-->
-            <!--}, {-->
-                <!--name: 'John',-->
-                <!--data: [5, 7, 3]-->
-            <!--}]-->
-        <!--});-->
-    <!--});-->
-<!--</script>-->
 
 <script src="./js/zepto.min.js"></script>
 <script src="./js/router.min.js"></script>
 <script src="./js/index.js"></script>
-
 </body>
 </html>

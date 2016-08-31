@@ -1,5 +1,6 @@
-$(function () {
 
+
+$(function () {
     var router = new Router({
         container: '#container',
         enterTimeout: 250,
@@ -484,40 +485,24 @@ $(function () {
         $('#gameOver').show().on('click', '.continue', function () {
             $('#gameOver').off('click').hide();
         });
-        $('#gameOver').show().on('click', '.stop', function () {
-            if (localStorage.personList && localStorage.getItem('isGame') == 1) {
-                var personList = localStorage.personList.split(",");
+    });
 
-                var fso, tf;
-                fso = new ActiveXObject("Scripting.FileSystemObject");
-                // 创建新文件
-                tf = fso.CreateTextFile("testfile.txt", true);
-                // 填写数据，并增加换行符
-                tf.WriteLine("Testing 1, 2, 3.") ;
-                // 增加3个空行
-                tf.WriteBlankLines(3);
-                // 填写一行，不带换行符
-                tf.Write ("我是深情小建.");
-                // 关闭文件
-                tf.Close();
-
-
-
-
-
-                for(var i = 0; i < personList.length; i++) {
-                    localStorage.removeItem(i);
-                }
-                localStorage.setItem('isGame', 0);
-                localStorage.removeItem('personList');
-                $('.total_score_list').html('');
-                $('#game_hint').find('.weui_toast_content').html('操作完成');
-                $('#game_hint').show();
-                setTimeout(function () {
-                    $('#game_hint').hide();
-                }, 2000);
-            }
-            window.location.href = "person.html";
+    //history tab
+    $('.weui_navbar').on('click', '.weui_navbar_item', function () {
+        var parentObj = $(this).parent();
+        parentObj.find('.weui_navbar_item').each(function () {
+            $(this).removeClass('weui_bar_item_on');
         });
+        $(this).addClass('weui_bar_item_on');
+
+        if ($(this).data('type') == 'search_by_game') {
+            $('.search_by_name').hide();
+            $('.search_by_game').show();
+        }
+        else if ($(this).data('type') == 'search_by_name') {
+            $('.search_by_game').hide();
+            $('.search_by_name').show();
+        }
+
     });
 });
