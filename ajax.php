@@ -53,6 +53,18 @@ elseif ($action == 'searchByGame') { //根据比赛场次查询
 
     echo json_encode($arr);
 }
+elseif ($action == 'searchByName') { //根据比赛选手查询
+    $name = $_GET['name'];
+    if ($name) {
+        $resultList = getAllResult();
+
+        $arr['success'] = 1;
+        $arr['msg'] = 'OK~~';
+        $arr['chartData'] = searchByName($resultList, $name);
+    }
+
+    echo json_encode($arr);
+}
 
 function getAllResult() {
     $results = file(RESULT_PATH);
@@ -131,7 +143,6 @@ function searchByGame($resultList, $game) {
 
         $score = explode(",", $chart->detail);
 
-
         $res['id'] = $chart->name;
         $scoreList = array();
         $gameIdx = 0;
@@ -150,6 +161,31 @@ function searchByGame($resultList, $game) {
 
     $list['data'] = $data;
     $list['series'] = $series;
+    return $list;
+}
+
+function searchByName($resultList, $name) {
+    $chartList = array();
+    $chartList['name'] = $name;
+    foreach ($resultList as $result) {
+        foreach ($result as $item) {
+            if (is_array($item)) {
+                foreach ($item as $data) {
+                    if ($name == $data->name) {
+                        $score = explode(",", $data->detail);
+                        foreach ($score as $a) {
+                            if ($a) {
+                                $chartList['data'][] = intval($a);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    $list['series'][] = $chartList;
+
     return $list;
 }
 

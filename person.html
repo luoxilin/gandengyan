@@ -6,11 +6,40 @@
     <title>干瞪眼</title>
     <link rel="stylesheet" href="./style/weui.css"/>
     <link rel="stylesheet" href="./style/index.css"/>
+    <script src="./js/jquery-3.1.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".stop").click(function(){
+                if (localStorage.personList && localStorage.getItem('isGame') == 1) {
+                    var personList = localStorage.personList.split(",");
+                    //清除LocalStorage
+                    for(var j = 0; j < personList.length; j++) {
+                        localStorage.removeItem(j);
+                    }
+                    localStorage.setItem('isGame', 0);
+                    localStorage.removeItem('personList');
+                    $('.total_score_list').html('');
+                    $('#game_hint').find('.weui_toast_content').html('操作完成');
+                    $('#game_hint').show();
+                    setTimeout(function () {
+                        $('#game_hint').hide();
+                    }, 2000);
+                }
+                window.location.href = "person.html";
+            });
+        });
+    </script>
 </head>
 <body>
+<div style="text-align:center; margin-top:20px;">
+    <a href="index.html">
+        <img src="images/icon_nav_home.png"/>
+    </a>
+</div>
     <div class="hd">
         <h1 class="page_title">Person</h1>
     </div>
+
     <div class="bd spacing">
         <div class="weui_cells_title">Person</div>
         <div class="weui_cells weui_cells_form person_list">

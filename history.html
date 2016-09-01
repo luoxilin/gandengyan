@@ -33,7 +33,7 @@
                         game: game
                     }, function (d) {
                         if (d.success == 1) {
-                            $('#container').highcharts({
+                            $('#container1').highcharts({
                                 chart: {
                                     type: 'column'
                                 },
@@ -51,7 +51,9 @@
                                 legend: {
                                     enabled: false
                                 },
-
+                                credits: {
+                                    enabled:false
+                                },
                                 plotOptions: {
                                     series: {
                                         borderWidth: 0,
@@ -78,7 +80,46 @@
                 }
             });
             $('.btn_search').on('click', '.btn_search_name', function () {
-                alert('你们还要继续看咩?');
+                var name = $('#name').find("option:selected").val();
+                if (name == 0) {
+                    alert('请选择一个小伙伴姓名');
+                }
+                else {
+                    $.get("ajax.php", {
+                        action: 'searchByName',
+                        name: name
+                    }, function (d) {
+                        if (d.success == 1) {
+                            $('#container2').highcharts({
+                                chart: {
+                                    type: 'line'
+                                },
+                                title: {
+                                    text: name
+                                },
+                                credits: {
+                                    enabled:false
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: '得分'
+                                    }
+                                },
+                                plotOptions: {
+                                    line: {
+                                        dataLabels: {
+                                            enabled: true
+                                        },
+                                        enableMouseTracking: false
+                                    }
+                                },
+                                series: d.chartData.series
+                            });
+                        } else {
+                            alert(d.msg);
+                        }
+                    }, "json");
+                }
             });
         });
     </script>
@@ -94,7 +135,13 @@
                 根据选手
             </div>
         </div>
+
         <div class="weui_tab_bd search_by_game">
+            <div style="text-align:center; margin-top:20px;">
+                <a href="index.html">
+                    <img src="images/icon_nav_home.png"/>
+                </a>
+            </div>
             <div class="hd">
                 <h1 class="page_title">History</h1>
             </div>
@@ -115,9 +162,14 @@
                     <a class="weui_btn weui_btn_primary btn_search_game" href="javascript:;">查看</a>
                 </div>
             </div>
-            <div id="container" style="width:90%; height:400px; margin-left:5%; margin-top:5%;"></div>
+            <div id="container1" style="width:90%; height:400px; margin-left:5%; margin-top:5%;"></div>
         </div>
         <div class="weui_tab_bd search_by_name" style="padding-top: 50px;display: none;">
+            <div style="text-align:center; margin-top:20px;">
+                <a href="index.html">
+                    <img src="images/icon_nav_home.png"/>
+                </a>
+            </div>
             <div class="hd">
                 <h1 class="page_title">History</h1>
             </div>
@@ -138,7 +190,7 @@
                     <a class="weui_btn weui_btn_primary btn_search_name" href="javascript:;">查看</a>
                 </div>
             </div>
-            <div id="container" style="width:90%; height:400px; margin-left:5%; margin-top:5%;"></div>
+            <div id="container2" style="width:90%; height:400px; margin-left:5%; margin-top:5%;"></div>
         </div>
     </div>
 </div>
