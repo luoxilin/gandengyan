@@ -24,7 +24,7 @@ $arr['msg'] = 'Error~~';
 
 if ($action == 'save') { //存储比赛记录
     $json_string = $_GET['jsonString'];
-    file_put_contents($resultPath, $json_string."\n", FILE_APPEND);
+    file_put_contents(RESULT_PATH, $json_string."\n", FILE_APPEND);
 
     $arr['success'] = 1;
     $arr['msg'] = 'OK~~';
