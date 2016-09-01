@@ -131,11 +131,12 @@ function searchByGame($resultList, $game) {
     $COLOR_TYPE = eval(COLOR_TYPE);
     foreach ($chartList as $chart) {
         $item = array();
-        $item['name'] = $chart->name;
         if ($chart->total >= 0) {
+            $item['name'] = $chart->name.' 赢了';
             $item['color'] = $COLOR_TYPE['green'][$idx];
         }
         else {
+            $item['name'] = $chart->name.' 输了';
             $item['color'] = $COLOR_TYPE['red'][$idx];
         }
         $item['y'] = abs($chart->total);
