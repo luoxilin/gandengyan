@@ -400,21 +400,33 @@ $(function () {
     $('.weui_btn_area').on('click', '.btn_add_person', function () {
         if (localStorage.getItem('isGame') == 0 || localStorage.getItem('isGame') === null) {
             var personList = [],
-                index = 0;
-            $('.person_list').find('.person_name').each(function(){
+                index = 0,
+                isNameDuplicated = 0;
+            $('.person_list').find('.person_name').each(function () {
                 if ($(this).val()) {
+                    for (var i = 0; i < personList.length; i++) {
+                        if ($(this).val() == personList[i]) {
+                            isNameDuplicated = 1;
+                        }
+                    }
                     personList[index] = $(this).val();
                     index++;
                 }
             });
-            localStorage.setItem('personList', personList);
-            localStorage.setItem('isGame', 1);
-            $('#person_hint').find('.weui_toast_content').html('操作完成');
-            window.location.href = "game.html";
+            if (isNameDuplicated == 1) {
+                $('#person_hint').find('.weui_toast_content').html('队员名称不能有重名哟~');
+            }
+            else {
+                localStorage.setItem('personList', personList);
+                localStorage.setItem('isGame', 1);
+                $('#person_hint').find('.weui_toast_content').html('操作完成');
+                window.location.href = "game.html";
+            }
         }
         else if (localStorage.getItem('isGame') == 1) {
             $('#person_hint').find('.weui_toast_content').html('比赛已经开始');
         }
+
         $('#person_hint').show();
         setTimeout(function () {
             $('#person_hint').hide();
