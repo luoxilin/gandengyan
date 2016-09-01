@@ -2,7 +2,7 @@
 $action = $_GET['action'];
 
 define('RESULT_PATH', 'result.json');
-define('COLOR_TYPE', array(
+define('COLOR_TYPE', "return array(
     'green' => array(
         0 => '#779E00',
         1 => '#94B62D',
@@ -17,7 +17,7 @@ define('COLOR_TYPE', array(
         3 => '#FC3E50',
         4 => '#FC707D'
     )
-));
+);");
 
 $arr['success'] = 0;
 $arr['msg'] = 'Error~~';
@@ -116,14 +116,15 @@ function searchByGame($resultList, $game) {
     $data = array();
     $series = array();
     $idx = 0;
+    $COLOR_TYPE = eval(COLOR_TYPE);
     foreach ($chartList as $chart) {
         $item = array();
         $item['name'] = $chart->name;
         if ($chart->total >= 0) {
-            $item['color'] = COLOR_TYPE['green'][$idx];
+            $item['color'] = $COLOR_TYPE['green'][$idx];
         }
         else {
-            $item['color'] = COLOR_TYPE['red'][$idx];
+            $item['color'] = $COLOR_TYPE['red'][$idx];
         }
         $item['y'] = abs($chart->total);
         $item['drilldown'] = $chart->name;
