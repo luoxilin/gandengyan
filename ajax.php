@@ -166,18 +166,15 @@ function searchByGame($resultList, $game) {
 
 function searchByName($resultList, $name) {
     $chartList = array();
+    $categoryList = array();
     $chartList['name'] = $name;
     foreach ($resultList as $result) {
         foreach ($result as $item) {
             if (is_array($item)) {
                 foreach ($item as $data) {
                     if ($name == $data->name) {
-                        $score = explode(",", $data->detail);
-                        foreach ($score as $a) {
-                            if ($a) {
-                                $chartList['data'][] = intval($a);
-                            }
-                        }
+                        $categoryList[] = $result->time;
+                        $chartList['data'][] = intval($data->total);
                     }
                 }
             }
@@ -185,6 +182,7 @@ function searchByName($resultList, $name) {
     }
 
     $list['series'][] = $chartList;
+    $list['categories'] = $categoryList;
 
     return $list;
 }
