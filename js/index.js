@@ -384,12 +384,24 @@ $(function () {
 
     //person
     $('.weui_btn_area').on('click', '.add_person', function () {
-        $('.person_list').append('<div class="weui_cell person">'+
-            '<div class="weui_cell_hd"><label class="weui_label"><i class="weui_icon_cancel del_person"></i>&nbsp;姓名</label></div>'+
-            '<div class="weui_cell_bd weui_cell_primary">'+
-            '<input class="weui_input person_name" type="text" placeholder="请输入姓名"/>'+
-            '</div>'+
-            '</div>');
+        $('.person_list').append('<div class="weui_cell weui_cell_select weui_select_after">'+
+        '<div class="weui_cell_hd">'+
+        '<label for="" class="weui_label">姓名</label>'+
+        '</div>'+
+        '<div class="weui_cell_bd weui_cell_primary">'+
+        '<select class="weui_select" name="select2 add_name" id="add_name">'+
+        '<option value="灰灰">灰灰</option>'+
+        '<option value="平平">平平</option>'+
+        '<option value="洋洋">洋洋</option>'+
+        '<option value="年阿姨">年阿姨</option>'+
+        '<option value="钦哥">钦哥</option>'+
+        '<option value="麻麻">麻麻</option>'+
+        '<option value="主公">主公</option>'+
+        '<option value="肉肉">肉肉</option>'+
+        '<option value="济晨">济晨</option>'+
+        '<option value="老斌">老斌</option>'+
+        '</select>'+
+        '</div');
     });
 
     $('.person').on('click', '.del_person', function () {
@@ -402,7 +414,7 @@ $(function () {
             var personList = [],
                 index = 0,
                 isNameDuplicated = 0;
-            $('.person_list').find('.person_name').each(function () {
+            $('.person_list').find('option:selected').each(function () {
                 if ($(this).val()) {
                     for (var i = 0; i < personList.length; i++) {
                         if ($(this).val() == personList[i]) {

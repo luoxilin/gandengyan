@@ -9,6 +9,17 @@
     <script src="./js/jquery-3.1.0.min.js"></script>
     <script>
         $(document).ready(function(){
+            $("#add_name").html('<option value="灰灰">灰灰</option>'
+                                +'<option value="平平">平平</option>'
+                                +'<option value="洋洋">洋洋</option>'
+                                +'<option value="年阿姨">年阿姨</option>'
+                                +'<option value="钦哥">钦哥</option>'
+                                +'<option value="麻麻">麻麻</option>'
+                                +'<option value="主公">主公</option>'
+                                +'<option value="肉肉">肉肉</option>'
+                                +'<option value="济晨">济晨</option>'
+                                +'<option value="老斌">老斌</option>'
+            );
             $(".stop").click(function(){
                 if (localStorage.personList && localStorage.getItem('isGame') == 1) {
                     var personList = localStorage.personList.split(",");
@@ -43,12 +54,31 @@
     <div class="bd spacing">
         <div class="weui_cells_title">Person</div>
         <div class="weui_cells weui_cells_form person_list">
-            <div class="weui_cell person">
-                <div class="weui_cell_hd"><label class="weui_label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名</label></div>
-                <div class="weui_cell_bd weui_cell_primary">
-                    <input class="weui_input person_name" type="text" placeholder="请输入姓名">
+            <!--<div class="weui_cell person">-->
+                <!--<div class="weui_cell_hd"><label class="weui_label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名</label></div>-->
+                <!--<div class="weui_cell_bd weui_cell_primary">-->
+                    <!--<input class="weui_input person_name" type="text" placeholder="请输入姓名">-->
+                <!--</div>-->
+                <div class="weui_cell weui_cell_select weui_select_after">
+                    <div class="weui_cell_hd">
+                        <label for="" class="weui_label">姓名</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select" name="select2 add_name" id="add_name">
+                            <option value="灰灰">灰灰</option>
+                            <option value="平平">平平</option>
+                            <option value="洋洋">洋洋</option>
+                            <option value="年阿姨">年阿姨</option>
+                            <option value="钦哥">钦哥</option>
+                            <option value="麻麻">麻麻</option>
+                            <option value="主公">主公</option>
+                            <option value="肉肉">肉肉</option>
+                            <option value="济晨">济晨</option>
+                            <option value="老斌">老斌</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+            <!--</div>-->
         </div>
         <div class="weui_btn_area" style="text-align: right;">
             <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_default add_person">增加</a>
