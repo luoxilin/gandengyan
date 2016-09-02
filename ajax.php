@@ -79,10 +79,12 @@ function getAllResult() {
 function getUserList($resultList) {
     $userList = array();
     foreach ($resultList as $result) {
-        foreach ($result as $item) {
-            if (is_array($item)) {
-                foreach ($item as $data) {
-                    $userList[] = $data->name;
+        if (is_array($result)) {
+            foreach ($result as $item) {
+                if (is_array($item)) {
+                    foreach ($item as $data) {
+                        $userList[] = $data->name;
+                    }
                 }
             }
         }
@@ -99,7 +101,9 @@ function getUserList($resultList) {
 function getGameList($resultList) {
     $gameList = array();
     foreach ($resultList as $result) {
+        if (!is_array($result)) {
             $gameList[] = $result->time;
+        }
     }
     $gameList = array_filter(array_unique($gameList));
     $gameOption = '<option value="0">请选择一场比赛</option>';
@@ -132,11 +136,11 @@ function searchByGame($resultList, $game) {
     foreach ($chartList as $chart) {
         $item = array();
         if ($chart->total >= 0) {
-            $item['name'] = $chart->name.' 赢了';
+            $item['name'] = $chart->name.' 赢了'.abs($chart->total);
             $item['color'] = $COLOR_TYPE['green'][$idx];
         }
         else {
-            $item['name'] = $chart->name.' 输了';
+            $item['name'] = $chart->name.' 输了'.abs($chart->total);
             $item['color'] = $COLOR_TYPE['red'][$idx];
         }
         $item['y'] = abs($chart->total);
