@@ -79,16 +79,15 @@ function getAllResult() {
 function getUserList($resultList) {
     $userList = array();
     foreach ($resultList as $result) {
-        if (is_array($result)) {
-            foreach ($result as $item) {
-                if (is_array($item)) {
-                    foreach ($item as $data) {
-                        $userList[] = $data->name;
-                    }
+        foreach ($result as $item) {
+            if (is_array($item)) {
+                foreach ($item as $data) {
+                    $userList[] = $data->name;
                 }
             }
         }
     }
+
     $userList = array_filter(array_unique($userList));
     $userOption = '<option value="0">请选择一个小伙伴姓名</option>';
     foreach ($userList as $item) {
