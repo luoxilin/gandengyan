@@ -39,26 +39,24 @@
                         })
                     },function(d){
                         if(d.success==1){
-                            alert(d.msg);
+                            //清除LocalStorage
+                            for(var j = 0; j < personList.length; j++) {
+                                localStorage.removeItem(j);
+                            }
+                            localStorage.setItem('isGame', 0);
+                            localStorage.removeItem('personList');
+                            $('.total_score_list').html('');
+                            $('#game_hint').find('.weui_toast_content').html('操作完成');
+                            $('#game_hint').show();
+                            setTimeout(function () {
+                                $('#game_hint').hide();
+                            }, 2000);
+                            window.location.href = "person.html";
                         }else {
                             alert(d.msg);
                         }
                     },"json");
-
-                    //清除LocalStorage
-                    for(var j = 0; j < personList.length; j++) {
-                        localStorage.removeItem(j);
-                    }
-                    localStorage.setItem('isGame', 0);
-                    localStorage.removeItem('personList');
-                    $('.total_score_list').html('');
-                    $('#game_hint').find('.weui_toast_content').html('操作完成');
-                    $('#game_hint').show();
-                    setTimeout(function () {
-                       $('#game_hint').hide();
-                    }, 2000);
                 }
-                window.location.href = "person.html";
             });
         });
 
