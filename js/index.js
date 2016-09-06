@@ -401,7 +401,7 @@ $(function () {
         '<option value="济晨">济晨</option>'+
         '<option value="老斌">老斌</option>'+
         '</select>'+
-        '</div');
+        '</div>');
     });
 
     $('.person').on('click', '.del_person', function () {
